@@ -1,6 +1,7 @@
 package com.example.project;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Exercise2 {
     public static void main(String[] args) {
@@ -14,8 +15,23 @@ public class Exercise2 {
 
     public boolean existenDuplicados(String str) {
         MyStack<Character> stack = new LinkedListStack<>();
-        // Colocar codigo aqui
-
+        char[] ch = str.toCharArray();
+        ArrayList<Character> operadores = new ArrayList<Character>();
+        operadores.add('+');
+        operadores.add('-');
+        for (int i = 0;i < ch.length; i++) {
+            if(ch[i] == '(' || operadores.contains(ch[i]))
+                stack.push(ch[i]);
+            if(ch[i] == ')'){
+                if(operadores.contains(stack.top()))
+                    stack.pop();
+                if(stack.top() == '(')
+                    stack.pop();
+                if(!stack.isEmpty() && stack.top() == '(' && ch[i+1] == ')'){
+                    return true;
+                }
+            }
+        }
         return false;
     }
 }
